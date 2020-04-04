@@ -61,7 +61,7 @@ class Bow extends Weapon {
 class LongBow extends Weapon {
     constructor () {
         super ('Длинный лук', 15, 200, 4);
-        //this['version'] = 'Лук';
+        this['version'] = 'Лук';
     }
 }
 
@@ -80,7 +80,7 @@ class Sword extends Weapon {
 class Poleax extends Weapon {
     constructor () {
         super ('Секира', 27, 800, 1);
-        //this['version'] = 'Меч';
+        this['version'] = 'Меч';
     }
 }
 
@@ -99,7 +99,7 @@ class Staff extends Weapon {
 class StormStaff extends Weapon {
     constructor () {
         super ('Посох Бури', 10, 300, 3);
-        //this['version'] = 'Посох';
+        this['version'] = 'Посох';
     }
 }
 
