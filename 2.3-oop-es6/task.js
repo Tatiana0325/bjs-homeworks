@@ -1,13 +1,18 @@
 //Задание 1
 class Weapon {
-    constructor(name, attack, durability, range) {
-        this.name = name;
-        this.attack = attack;
-        this.durability = durability;
-        this.range = range;
+    constructor(obj) {
+        this.name = obj.name;
+        this.attack = obj.attack;
+        this.durability = obj.durability;
+        this.range = obj.range;
+        this._durabilitu = obj.durability;
     }
     
     takeDamage(damage) {
+        if (isNaN(parseInt(damage))) {
+            return 'Ошибка! Неверный формат введеного значения.'
+        }
+
         this.durability -= damage;
 
         if (this.durability < 0) {
@@ -16,7 +21,7 @@ class Weapon {
     }
 
     getDamage() {
-        if ((this.durability == 0) || (this.durability == 0)) {
+        if (this.durability == 0){
             return 0;
         }
 
@@ -24,7 +29,7 @@ class Weapon {
             return 1;
         }
 
-        if (this.durability >= (this.durability * 0.3)) {
+        if (this.durability >= (this._durability * 0.3)) {
             return this.attack;
         } else {
                 return this.attack / 2;
@@ -36,78 +41,165 @@ class Weapon {
     }
 }
 
-const hand = new Weapon('Рука', 1, Infinity, 1);
-const bow = new Weapon('Лук', 10, 200, 3);
-const swordOrdinary = new Weapon('Меч', 25, 500, 1);
-const knife = new Weapon('Нож', 5, 300, 1);
-const staff = new Weapon('Посох', 8, 300, 2);
+const sword = new Weapon({name: 'Старый меч',
+                          attack: 20,
+                          durability: 10,
+                          range: 1});
 
-const longBow = new Weapon('Длинный лук', 15, 200, 4);
+sword.takeDamage(5);
+console.log(sword.durability);
+                        
+sword.takeDamage(50);
+console.log(sword.durability);
+
+const hand = new Weapon({name: 'Рука', 
+                        attack: 1, 
+                        durability: Infinity, 
+                        range: 1});
+                        
+hand.takeDamage(20);
+console.log(hand.durability);
+
+const bow = new Weapon({name: 'Лук',
+                        attack:  10,
+                        durability: 200, 
+                        range: 3});
+
+bow.takeDamage(20);
+console.log(bow.durability);
+                       
+bow.takeDamage(200);
+console.log(bow.durability);
+
+console.log(bow.durability); 
+console.log(bow.getDamage());
+
+console.log(hand.durability); 
+console.log(hand.getDamage());
+
+console.log(bow.durability);
+console.log(bow.isBroken());
+
+console.log(hand.durability);
+console.log(hand.isBroken());
+
+const swordOrdinary = new Weapon({name: 'Меч',
+                        attack:  25,
+                        durability: 500,
+                        range: 1});
+
+const knife = new Weapon({name: 'Нож',
+                        attack: 5,
+                        durability: 300,
+                        range: 1});
+
+const staff = new Weapon({name: 'Посох',
+                        attack: 8,
+                        durability: 300,
+                        range: 2});
+
+const longBow = new Weapon({name: 'Длинный лук',
+                        attack: 15,
+                        durability: 200,
+                        range: 4});
 longBow['version'] = 'Лук';
 
-const poleax = new Weapon('Секира', 27, 800, 1);
+const poleax = new Weapon({name: 'Секира',
+                        attack: 27,
+                        durability: 800,
+                        range: 1});
 poleax['version'] = 'Меч';
 
-const staffStorm = new Weapon('Посох Бури', 10, 300, 3);
+const staffStorm = new Weapon({name: 'Посох Бури',
+                            attack: 10,
+                            durability: 300,
+                            range: 3});
 staffStorm['version'] = 'Посох';
 
 //Задание 2
 class Bow extends Weapon {
     constructor () {
-        super ('Лук', 10, 200, 3);
+        super ({name: 'Лук',
+                attack:  10,
+                durability: 200, 
+                range: 3});
     }
 }
 
 class LongBow extends Weapon {
     constructor () {
-        super ('Длинный лук', 15, 200, 4);
+        super ({name: 'Длинный лук',
+                attack: 15,
+                durability: 200,
+                range: 4});
+
         this['version'] = 'Лук';
     }
 }
 
 class Hand extends Weapon {
     constructor () {
-        super ('Рука', 1, Infinity, 1);
+        super ({name: 'Рука', 
+               attack: 1, 
+               durability: Infinity, 
+               range: 1});
     }
 }
 
 class Sword extends Weapon {
     constructor () {
-        super ('Меч', 25, 500, 1);
+        super ({name: 'Меч',
+               attack:  25,
+               durability: 500,
+               range: 1});
     }
 }
 
 class Poleax extends Weapon {
     constructor () {
-        super ('Секира', 27, 800, 1);
+        super ({name: 'Секира',
+               attack: 27,
+               durability: 800,
+               range: 1});
+
         this['version'] = 'Меч';
     }
 }
 
 class Knife extends Weapon {
     constructor () {
-        super ('Нож', 5, 300, 1);
+        super ({name: 'Нож',
+               attack: 5,
+               durability: 300,
+               range: 1});
     }
 }
 
 class Staff extends Weapon {
     constructor () {
-        super ('Посох', 8, 300, 2);
+        super ({name: 'Посох',
+               attack: 8,
+               durability: 300,
+               range: 2});
     }
 }
 
 class StormStaff extends Weapon {
     constructor () {
-        super ('Посох Бури', 10, 300, 3);
+        super ({name: 'Посох Бури',
+               attack: 10,
+               durability: 300,
+               range: 3});
+
         this['version'] = 'Посох';
     }
 }
 
-const bow1 = new Bow();
-console.log(bow1.name);
-console.log(bow1.attack);
-console.log(bow1.durability);
-console.log(bow1.range);
+const bow2 = new Bow();
+console.log(bow2.name);
+console.log(bow2.attack);
+console.log(bow2.durability);
+console.log(bow2.range);
 
 //Задание 3
 class StudentLog {
