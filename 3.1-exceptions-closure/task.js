@@ -1,58 +1,60 @@
 //Задание 1
 function parseCount(num) {
-    if (isNaN(Number.parseInt(num))) {  
+    if (isNaN(Number.parseInt(num)) || (typeof(num) == 'undefined')) {  
         throw new Error('Невалидное значение');
+    }else {
+        return Number.parseInt(num);
     }
 };
 
 function validateCount(num) {
     try {
-        parseCount(num);
-        return num
-    } catch {
-        return(`Ошибка! Что-то не так с числом ${num}`);
+        return parseCount(num);
+    } catch(err) {
+        return err;
     }
 }
 
 //Задание 2
 class Triangle {
     constructor(a, b, c) {
-        this.side1 = a;
-        this.side2 = b;
-        this.side3 = c;
+        this.sideA = a;
+        this.sideB = b;
+        this.sideC = c;
     }
 
     isTriangle() {
-        if (((this.side1 + this.side2) <= this.side3) || ((this.side2 + this.side3) <= this.side1) || ((this.side3 + this.side1) <= this.side2)) {
+        if (((this.sideA + this.sideB) <= this.sideC) || ((this.sideB + this.sideC) <= this.sideA) || ((this.sideC + this.sideA) <= this.sideB)) {
             throw new Error('Треугольник с такими сторонами не существует');
-       }
+        }
     }
 
     getPerimeter() {
         try {
             this.isTriangle();
-            return (this.side1 + this.side2 + this.side3);
+            return (this.sideA + this.sideB + this.sideC);
         } catch {
-            return 'Ошибка! Неправильный треугольник'
+            return 'Ошибка! Неправильный треугольник';
         }
     }
 
     getArea() {
-        try{
+        try {
             this.isTriangle();
-            const p = this.getPerimeter() / 2;
-            return (Math.sqrt(p * (p - this.side1) * (p - this.side2) * (p - this.side3)));
+            const p = (this.sideA + this.sideB + this.sideC) / 2;
+            const area = Math.sqrt(p * (p - this.sideA) * (p - this.sideB) * (p - this.sideC));
+            return Number.parseFloat(area.toFixed(3));
         } catch {
-            return 'Ошибка! Неправильный треугольник'
-        } 
+            return 'Ошибка! Неправильный треугольник'; 
+        }
+    }
+
+    getArea_getPerimeter() {
+        return 'Ошибка! Неправильный треугольник';
     }
 }
 
 function getTriangle(a, b, c) {
-    try {
-        const triangle = new Triangle(a, b, c);
-        return triangle;        
-    } catch {
-        return triangle; 
-    }
+    const triangle = new Triangle(a, b, c);
+    return triangle;
 }
