@@ -21,40 +21,35 @@ class Triangle {
         this.sideA = a;
         this.sideB = b;
         this.sideC = c;
-    }
 
-    isTriangle() {
         if (((this.sideA + this.sideB) <= this.sideC) || ((this.sideB + this.sideC) <= this.sideA) || ((this.sideC + this.sideA) <= this.sideB)) {
             throw new Error('Треугольник с такими сторонами не существует');
         }
     }
 
     getPerimeter() {
-        try {
-            this.isTriangle();
-            return (this.sideA + this.sideB + this.sideC);
-        } catch {
-            return 'Ошибка! Неправильный треугольник';
-        }
+        return (this.sideA + this.sideB + this.sideC);
     }
 
     getArea() {
-        try {
-            this.isTriangle();
-            const p = (this.sideA + this.sideB + this.sideC) / 2;
-            const area = Math.sqrt(p * (p - this.sideA) * (p - this.sideB) * (p - this.sideC));
-            return Number.parseFloat(area.toFixed(3));
-        } catch {
-            return 'Ошибка! Неправильный треугольник'; 
-        }
-    }
-
-    getArea_getPerimeter() {
-        return 'Ошибка! Неправильный треугольник';
+        const p = (this.sideA + this.sideB + this.sideC) / 2;
+        const area = Math.sqrt(p * (p - this.sideA) * (p - this.sideB) * (p - this.sideC));
+        return Number.parseFloat(area.toFixed(3));
     }
 }
 
 function getTriangle(a, b, c) {
-    const triangle = new Triangle(a, b, c);
-    return triangle;
+    try {
+        return new Triangle(a, b, c);
+    } catch {
+        return obj = {
+            getArea() {
+               return 'Ошибка! Неправильный треугольник';
+            },
+
+            getPerimeter() {
+                return 'Ошибка! Неправильный треугольник';
+            }
+        }
+    }
 }
