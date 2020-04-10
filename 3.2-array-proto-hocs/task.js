@@ -32,9 +32,9 @@ function memorize(func, limit) {
     return function() {
         let arr = Array.from(arguments);
 
-        let args = memory.find(mem => compareArrays(mem.args, arr));
+        let argum = memory.find(mem => compareArrays(mem.args, arr));
 
-        if (args == undefined) {
+        if (argum == undefined) {
             let res = func(...arr);
             memory.push({args: arr,
                 result: res
@@ -48,7 +48,7 @@ function memorize(func, limit) {
         } else {
             //console.log('Функция вызвана из памяти');
             
-            return args.result;
+            return argum.result;
         };
     }
 }
