@@ -19,15 +19,11 @@ function compareArrays(arr1, arr2) {
         return true;
     }
 
-    if (arr1.length == arr2.length) {
-        if (arr1.every(item1 => arr2.every(item1 => (arr1.indexOf(item1) == arr2.indexOf(item1))))) {
+    if ((arr1.length == arr2.length) && (arr1.every((item, i) => (item == arr2[i])))) {
             return true;
         } else {
             return false;
         }
-    } else {
-        return false;
-    }
 }
 
 function memorize(func, limit) {
@@ -36,7 +32,9 @@ function memorize(func, limit) {
     return function() {
         let arr = Array.from(arguments);
 
-        if (memory.find(mem => compareArrays(mem.args, arr)) == undefined) {
+        let args = memory.find(mem => compareArrays(mem.args, arr));
+
+        if (args == undefined) {
             let res = func(...arr);
             memory.push({args: arr,
                 result: res
@@ -48,10 +46,9 @@ function memorize(func, limit) {
 
             return res;
         } else {
-            let arg = memory.find(mem => compareArrays(mem.args, arr));
             //console.log('Функция вызвана из памяти');
             
-            return arg.result;
+            return args.result;
         };
     }
 }
@@ -73,7 +70,7 @@ testCase(sum, 12); //если работает отсрочка времени �
 //то время работы складывается из времени отсрочки и времени работы функции 501.39501953125ms
 //без времени отсрочки равно 0.13623046875ms
 testCase(memorize, 12);
-//в случае отсрочки времени у функции sum, у функции memorize врмя работы = 0.2041015625ms
+//в случае отсрочки времени у функции sum, у функции memorize время работы = 0.2041015625ms
 //если у sum отсрочку убрать, то время memorize =  0.159912109375ms, полчуется, что функция memorize
 //работает немного дольше, чем функция sum, что говорит о том, что функции memorize нужно чуть больше времени,
 //для того, чтобы записать в массив работу sum и пройти условие и вывести результат работы самой функцци sum
