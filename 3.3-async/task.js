@@ -30,15 +30,13 @@ class AlarmClock {
     };
 
     start() {
-        let data = this.getCurrentFormattedTime();
-
-        function checkClock(bell) {
-            if (bell.time == data) {
+        function checkClock(bell, time) {
+            if (time == bell.time) {
                 return bell.callback();
             }
         };
 
-        this.timerId = setInterval(this.alarmCollection.forEach(element => checkClock(element)), 1000);
+        this.timerId = setInterval(() => this.alarmCollection.forEach(element => checkClock(element, this.getCurrentFormattedTime())), 500);
     }
 
     stop() {
