@@ -1,23 +1,21 @@
 class AlarmClock {
     constructor () {
         this.alarmCollection = [];
-        this.id;
+        this.timerId = null;
     };
 
     addClock(time, func, id) {
         if (id == undefined) { 
-            throw new Error ('id не передан!');
-        };
-
-        if(this.alarmCollection.find(arg => (arg.id == id)) != undefined) {
-            throw new Error ('id уже существует!');
-        };
-        
-        this.alarmCollection.push({
-            id: id,
-            time: time,
-            callback: func
-        });
+            console.error('id не передан!');
+        } else if(this.alarmCollection.find(arg => (arg.id == id)) != undefined) {
+                console.error('id уже существует!');
+            } else {        
+                this.alarmCollection.push({
+                id: id,
+                time: time,
+                callback: func
+                });
+            }
     };
 
     removeClock (id) {
@@ -32,25 +30,21 @@ class AlarmClock {
     };
 
     start() {
-        const checkClock = (bell) => {
-            if (bell.time == this.getCurrentFormattedTime()) {
-                bell.callback();
-            }
-        }
+        let data = this.getCurrentFormattedTime();
 
-        if (this.id == undefined) {
-            this.id = setInterval(() => {
-                this.alarmCollection.forEach(element => checkClock(element)); 
-            }, 500);
+        function checkClock(bell) {
+            if (bell.time == data) {
+                return bell.callback();
+            }
         };
-    };
+
+        this.timerId = setInterval(this.alarmCollection.forEach(element => checkClock(element)), 1000);
+    }
 
     stop() {
-        if (this.id != undefined) {
-            clearInterval(this.id);
-            this.id = undefined;
-        }  
-    };
+        clearInterval(this.timerId);
+        this.timerId = null;
+    }
 
     printAlarms() {
         console.log(`Печать всех будильников в количестве: ${this.alarmCollection.length} `)
@@ -60,7 +54,7 @@ class AlarmClock {
     clearAlarms() {
         this.stop();
         this.alarmCollection = [];
-    };
+    }
 }
 
 function testCase() {
